@@ -3,11 +3,9 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func main() {
-	start := time.Now()
 
 	arr := [5]int{2, 4, 6, 8, 10}
 	res := 0
@@ -22,8 +20,6 @@ func main() {
 	wg.Wait()
 
 	fmt.Println(res)
-
-	fmt.Println(time.Since(start))
 }
 
 func worker(val int, res *int, wg *sync.WaitGroup, m *sync.Mutex) {

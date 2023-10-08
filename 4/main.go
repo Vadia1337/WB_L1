@@ -28,20 +28,24 @@ func main() {
 		syscall.SIGINT)
 
 	for {
-
-		if len(sigChan) > 0 {
+		select {
+		case <-sigChan:
 			fmt.Println(" Нажали ctrl+c")
-			close(ch)
-			break
-		}
+			close(ch) // закрываем канал
+			return
 
-		ch <- 10
-		time.Sleep(time.Second)
+		default:
+			ch <- 10
+			time.Sleep(time.Second)
+		}
 	}
 }
 
 func worker(ch chan int) {
-	for val := range ch {
+	for val := range ch { //если канал закрыт, горутина завершает свою работу
 		fmt.Println(val)
 	}
 }
+
+//представленный способ хорошо читается, выглядит компактно и вполне применим на бою, наряду с другими способами:
+//завершение контекстом (слушать ctx.Done())

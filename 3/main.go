@@ -3,11 +3,9 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 func main() {
-	start := time.Now()
 
 	arr := [5]int{2, 4, 6, 8, 10}
 	res := make(chan int, 5)
@@ -32,8 +30,6 @@ func main() {
 	wgOut.Wait()
 
 	fmt.Println(sum)
-
-	fmt.Println(time.Since(start))
 }
 
 func worker(val int, res chan int, wg *sync.WaitGroup) {
